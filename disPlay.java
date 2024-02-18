@@ -65,10 +65,10 @@ public class DisPlay implements MouseListener{
     private int cntidx = 0;
     private int j; //for blinking
     private int cntamount = 0;
+    
+    
     private Timer blinkTimer;
-    
 
-    
     // public disPlay(){
     //     JFrame window = new JFrame();
     //     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -286,8 +286,9 @@ public class DisPlay implements MouseListener{
         orgPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
         yellPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
         greenPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        
         PadActionListener action = new PadActionListener();
+        
         redPad.addActionListener(action);
         cyanPad.addActionListener(action);
         greenPad.addActionListener(action);
@@ -497,6 +498,7 @@ public class DisPlay implements MouseListener{
                     } catch (Exception x) {
                         // TODO: handle exception
                         System.err.println(x);
+                        
                         gamePhase();
                         // return;
                     }
@@ -516,51 +518,87 @@ public class DisPlay implements MouseListener{
         int redcnt = 0;
         int cyancnt = 0;
         int greencnt = 0;
-        int orgcnt = 0;
         int purcnt = 0;
+        int orgcnt = 0;
         int yellcnt = 0;
         int totalcnt = 0;
         
+        PadActionListener(){
+            redcnt = 0;
+            cyancnt = 0;
+            greencnt = 0;
+            purcnt = 0;
+            orgcnt = 0;
+            yellcnt = 0;
+            totalcnt = 0;
+        }
         @Override
         public void actionPerformed(ActionEvent e) {
+            
+            System.out.println("redcnt: " + redcnt);
+            System.out.println("cyancnt: " + cyancnt);
+            System.out.println("greencnt: " + greencnt);
+            System.out.println("purcnt: " + purcnt);
+            System.out.println("orgcnt: " + orgcnt);
+            System.out.println("yellcnt: " + yellcnt);
+            System.out.println("totalcnt before click: " + totalcnt);
             JButton input = (JButton)e.getSource();
             PadType clickedPad = null;
+            if (countgen >= 6 && ans.isEmpty()){
+                redcnt = 0;
+                cyancnt = 0;
+                greencnt = 0;
+                purcnt = 0;
+                orgcnt = 0;
+                yellcnt = 0;
+                totalcnt = 0;
+            }
+
             if (input == redPad) {
-                redcnt++;
+                redcnt += 1;
                 clickedPad = PadType.RED;
                 ans.put(clickedPad, redcnt);
+                
             }
             else if (input == cyanPad) {
-                cyancnt++;
+                cyancnt += 1;
                 clickedPad = PadType.CYAN;
                 ans.put(clickedPad, cyancnt);
+                
             } 
             else if (input == greenPad) {
-                greencnt++;
+                greencnt += 1;
                 clickedPad = PadType.LIGHT_GREEN;
                 ans.put(clickedPad, greencnt);
+                
             } 
             else if (input == orgPad) {
-                orgcnt++;
+                orgcnt += 1;
                 clickedPad = PadType.ORANGE;
                 ans.put(clickedPad, orgcnt);
+                
             } 
             else if (input == purPad) {
-                purcnt++;
+                purcnt += 1;
                 clickedPad = PadType.PURPLE;
                 ans.put(clickedPad, purcnt);
+                
             } 
             else if (input == yellPad) {
-                yellcnt++;
+                yellcnt += 1;
                 clickedPad = PadType.YELLOW;
                 ans.put(clickedPad, yellcnt);
+                
             }
-            totalcnt = (redcnt + cyancnt + greencnt + orgcnt + purcnt + yellcnt);
-            System.out.println(ans);
-            System.out.println(totalcnt);
+            totalcnt = redcnt + cyancnt + greencnt + orgcnt + purcnt + yellcnt;
+            System.out.println("ans list : " + ans);
+            System.out.println("total cnt :" + totalcnt);
 
             if (totalcnt == cntamount){
                 if (ans.equals(pattern)){
+                    if (blinkTimer != null && blinkTimer.isRunning()){
+                        blinkTimer.stop();
+                    }
                     System.out.println("You get 10 point");
                     int score = Integer.parseInt(numScore.getText()) + 10;
                     int highscore = Integer.parseInt(numHighscore.getText());
@@ -569,13 +607,21 @@ public class DisPlay implements MouseListener{
                         numHighscore.setText("" + score);
                     }
                     countgen++;
+                    System.out.println("restart elements");
                     list_pad.clear();
+                    System.out.println("listpad clear: " + list_pad);
                     list_amount.clear();
+                    System.out.println("listamount clear: " + list_amount);
                     pattern.clear();
+                    System.out.println("pattern clear: " + pattern);
                     pad.clear();
+                    System.out.println("pad clear: " + pad);
                     idx.clear();
+                    System.out.println("idx clear: " + idx);
                     ans.clear();
+                    System.out.println("ans clear: " + ans);
                     totalcnt = 0; 
+                    System.out.println("totalcnt clear: " + totalcnt);
                     redcnt = 0; 
                     cyancnt = 0; 
                     greencnt = 0; 
@@ -585,6 +631,8 @@ public class DisPlay implements MouseListener{
                     cntamount = 0;
                     cntidx = 0;
                     j = 0;
+                    clickedPad = null;
+                    e.setSource(null);
                     patternShow();
                 }
                 else{
@@ -611,6 +659,9 @@ public class DisPlay implements MouseListener{
                 }
             }
             else if (totalcnt > cntamount){
+                if (blinkTimer != null && blinkTimer.isRunning()){
+                    blinkTimer.stop();
+                }
                 numScore.setText("0");
                 System.out.println("Fail");
                 list_pad.clear();
@@ -632,21 +683,7 @@ public class DisPlay implements MouseListener{
                 cntidx = 0;
                 window.dispose();
             }
-            // System.out.println("you are: " + ans.equals(pattern));
-
-            // if(clickedPad != null && pad.size() > 0 && clickedPad == pad.get(0)) {
-            //     System.out.println("Clicked pad is at the first index!");
-                
-            // } 
-            // else {
-            //     System.out.println("Incorrect click!");
-            //     
-                
-            // }
-        }
-
-        
-        
+        }       
     }
 
 }
