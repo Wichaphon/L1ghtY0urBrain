@@ -55,11 +55,14 @@ public class DisPlay implements MouseListener{
     private LinkedHashMap<PadType,Integer> pattern = new LinkedHashMap<>();
     private ArrayList <PadType> list_pad = new ArrayList<>(); // list of Padtype 
     private ArrayList <Integer> list_amount = new ArrayList<>(); // list of amount to click in one pad
+    private ArrayList <PadType> pad = new ArrayList<>();
+    private ArrayList <Integer> idx = new ArrayList<>();
     private int countgen = 5; // count for generate pattern (level will increase from countgen)
     private int cntrandom = 1;
     private int cntpatt = 1;
     private int amount;
-    private int cntTimer;
+    private int cntidx = 0;
+    private int j; //for blinking
     private Timer blinkTimer;
 
     
@@ -231,15 +234,15 @@ public class DisPlay implements MouseListener{
     void patternShow(){
         genPattern();
         System.out.println(pattern);
-        ArrayList <PadType> pad = new ArrayList<>();
-        ArrayList <Integer> idx = new ArrayList<>();
+        pad = new ArrayList<>();
+        idx = new ArrayList<>();
         for (Map.Entry<PadType, Integer> patt : pattern.entrySet()){
             type = patt.getKey();
             int n = (int)patt.getValue();
             pad.add(type);
             idx.add(n);
             // if (type == PadType.RED){
-            //     startBlinkingEffect(type, n);
+                //startBlinkingEffect(type, n)
             // }
             // else if (type == PadType.CYAN){
                 
@@ -267,14 +270,29 @@ public class DisPlay implements MouseListener{
             
             
         }
-        int n = idx.get(0);
-        startBlinkingEffect(pad.get(0), idx.get(0));
+        startBlinkingEffect();
+        // int n = idx.get(0);
+        // for (int i = 0; i < idx.get(i); i++){
+        //     startBlinkingEffect(pad.get(i), idx.get(i));
+        //     // for (double x = 1; x <= 10000000; x+=.01);
+        // }
+        
+
+    
+        
+        // for (int i = 0; i < idx.size(); i++){
+        //     System.out.println(pad.get(i));
+        //     System.out.println(idx.get(i));
+        //     startBlinkingEffect(pad.get(i), idx.get(i));
+            
+        // }
+        
         // startBlinkingEffect(pad.get(1), idx.get(1));
         // cntTimer = 1;
         // Timer timer = new Timer(1000 * n * 2, new ActionListener() {
         //     @Override
-        //     public void actionPerformed(ActionEvent arg0) {            
-        //         startBlinkingEffect(pad.get(cntTimer), idx.get(cntTimer));
+        //     public void actionPerformed(ActionEvent arg0) {
+        //         startBlinkingEffect(pad.get(1), idx.get(1));
         //         // cntTimer++;
         //     }
         // });
@@ -284,6 +302,13 @@ public class DisPlay implements MouseListener{
         //     // timer.setRepeats(false);
         // }
         // timer.setRepeats(false);
+        // timer.start();
+        // Timer timer = new Timer(1000 * n * 2, e -> {
+
+        //     startBlinkingEffect(pad.get(1), idx.get(1));
+        // });
+        // timer.setRepeats(false);
+        // timer.setInitialDelay(1000);
         // timer.start();
     }
     private void genPattern(){
@@ -402,90 +427,94 @@ public class DisPlay implements MouseListener{
             btnQuit.setFont(new Font("Unispace", Font.BOLD,18));
         }
     }
-    private void startBlinkingEffect(PadType type, int n) {
+    private void startBlinkingEffect() {
         // because it has 2 if that make blinking then n should * 2 
-        amount = n * 2;
+        // PadType pad = pad.get(0);
+        // int count = (int) n.get(0);
+        j = 0;
+        amount = idx.get(j) * 2;
         ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 System.out.println("type = " + type);
                 System.out.println("amount = " + amount);
                 System.out.println("cntpatt = " + cntpatt);
+                if (cntidx == idx.size()){
+                    blinkTimer.stop();
+                }
                 if (cntpatt % 2 != 0){
-                    if (type == PadType.RED){
+                    if (pad.get(j) == PadType.RED){
                         redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad2.png"));
                         System.out.println("change REDpad to light already");
                     }
-                    else if(type == PadType.CYAN){
+                    else if(pad.get(j) == PadType.CYAN){
                         cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\cyanpad2.png"));
                         System.out.println("change CYANpad to light already");
                     }
-                    else if (type == PadType.LIGHT_GREEN){
+                    else if (pad.get(j) == PadType.LIGHT_GREEN){
                         greenPad.setIcon(new ImageIcon("Image\\Finalpad\\greenpad2.png"));
                         System.out.println("change GREENpad to light already");
                     }
-                    else if (type == PadType.ORANGE){
+                    else if (pad.get(j) == PadType.ORANGE){
                         orgPad.setIcon(new ImageIcon("Image\\Finalpad\\orgpad2.png"));
                         System.out.println("change ORGpad to light already");
                     }
-                    else if (type == PadType.PURPLE){
+                    else if (pad.get(j) == PadType.PURPLE){
                         purPad.setIcon(new ImageIcon("Image\\Finalpad\\purpad2.png"));
                         System.out.println("change PURpad to light already");
                     }
-                    else if (type == PadType.YELLOW){
+                    else if (pad.get(j) == PadType.YELLOW){
                         yellPad.setIcon(new ImageIcon("Image\\Finalpad\\yellpad2.png"));
                         System.out.println("change YELLpad to light already");
                     }
-
-                    
                 }
                 if (cntpatt % 2 == 0){
-                    if (type == PadType.RED){
+                    if (pad.get(j) == PadType.RED){
                         redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad1.png"));
                         System.out.println("REDback to default");
                     }
-                    else if(type == PadType.CYAN){
+                    else if(pad.get(j) == PadType.CYAN){
                         cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\cyanpad1.png"));
                         System.out.println("CYANback to default");
                     }
-                    else if (type == PadType.LIGHT_GREEN){
+                    else if (pad.get(j) == PadType.LIGHT_GREEN){
                         greenPad.setIcon(new ImageIcon("Image\\Finalpad\\greenpad1.png"));
                         System.out.println("GREENback to default");
                     }
-                    else if (type == PadType.ORANGE){
+                    else if (pad.get(j) == PadType.ORANGE){
                         orgPad.setIcon(new ImageIcon("Image\\Finalpad\\orgpad1.png"));
                         System.out.println("ORGback to default");
                     }
-                    else if (type == PadType.PURPLE){
+                    else if (pad.get(j) == PadType.PURPLE){
                         purPad.setIcon(new ImageIcon("Image\\Finalpad\\pupad1.png"));
                         System.out.println("PURback to default");
                     }
-                    else if (type == PadType.RED){
+                    else if (pad.get(j) == PadType.RED){
                         redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad1.png"));
                         System.out.println("REDback to default");
                     }
-                    else if (type == PadType.YELLOW){
+                    else if (pad.get(j) == PadType.YELLOW){
                         yellPad.setIcon(new ImageIcon("Image\\Finalpad\\yellpad1.png"));
                         System.out.println("YELLback to default");
                     }
 
                 }
+                
                 if (cntpatt == amount){
-                    cntpatt = 0;
-                    blinkTimer.stop();
-                    System.out.println("cntpatt after change = " + cntpatt);
-                    System.out.println("amount after change = " + amount);
+                    j++;
+                    cntidx++;
+                    amount = idx.get(j) * 2;
+                    cntpatt = 1;
                 }
-                cntpatt++;
+                else {
+                    cntpatt++;
+                }
             }
         };
         blinkTimer = new Timer(1000, action);
-        // blinkTimer.setRepeats(false);
-        blinkTimer.restart();
-        
         blinkTimer.start();
-        
-        
-    }
+    }    
+
 }
 
