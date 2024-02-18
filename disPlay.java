@@ -49,21 +49,24 @@ public class DisPlay implements MouseListener{
     private JLabel textHighscore, numHighscore; // label"Highscore:" and Labelhighscore
     private JButton btnQuit; // quit button
     private JLabel textQuit;
-    private JButton purPad, greenPad, redPad, cyanPad, orgPad, yellPad; // All pads (6 pads)
+    JButton purPad, greenPad, redPad, cyanPad, orgPad, yellPad; // All pads (6 pads)
     private Icon left, right, up, down;
     private PadType type; // enum Padtype
     private LinkedHashMap<PadType,Integer> pattern = new LinkedHashMap<>();
+    private LinkedHashMap<PadType, Integer> ans = new LinkedHashMap<>();
     private ArrayList <PadType> list_pad = new ArrayList<>(); // list of Padtype 
     private ArrayList <Integer> list_amount = new ArrayList<>(); // list of amount to click in one pad
     private ArrayList <PadType> pad = new ArrayList<>();
-    private ArrayList <Integer> idx = new ArrayList<>();
-    private int countgen = 5; // count for generate pattern (level will increase from countgen)
-    private int cntrandom = 1;
+    ArrayList <Integer> idx = new ArrayList<>();
+    private int countgen = 4; // count for generate pattern (level will increase from countgen)
+    private int cntrandom = 0;
     private int cntpatt = 1;
     private int amount;
     private int cntidx = 0;
     private int j; //for blinking
+    private int cntamount = 0;
     private Timer blinkTimer;
+    
 
     
     // public disPlay(){
@@ -159,8 +162,8 @@ public class DisPlay implements MouseListener{
         purPad.setOpaque(false);
         purPad.setContentAreaFilled(false);
         purPad.setBorder(BorderFactory.createEmptyBorder());
-        purPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        purPad.addMouseListener(this);;
+        
+        purPad.addMouseListener(this);
         // set greenpad
         greenPad = new JButton(new ImageIcon("Image\\Finalpad\\greenpad1.png"));
         greenPad.setBounds(260, 265, 200, 200);
@@ -170,7 +173,7 @@ public class DisPlay implements MouseListener{
         greenPad.setContentAreaFilled(false);
         greenPad.setBackground(Color.decode("#2b2b2b"));
         greenPad.setBorder(BorderFactory.createEmptyBorder());
-        greenPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
         // set redpad
         redPad = new JButton(new ImageIcon("Image\\Finalpad\\redpad1.png"));
         redPad.setBounds(370, 379, 200, 200);
@@ -180,7 +183,6 @@ public class DisPlay implements MouseListener{
         redPad.setContentAreaFilled(false);
         redPad.setBackground(Color.decode("#2b2b2b"));
         redPad.setBorder(BorderFactory.createEmptyBorder());
-        redPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
         // set cyanpad
         cyanPad = new JButton(new ImageIcon("Image\\Finalpad\\cyanpad1.png"));
         cyanPad.setBounds(370, 150, 200, 200);
@@ -190,7 +192,6 @@ public class DisPlay implements MouseListener{
         cyanPad.setContentAreaFilled(false);
         cyanPad.setBackground(Color.decode("#2b2b2b"));
         cyanPad.setBorder(BorderFactory.createEmptyBorder());
-        cyanPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
         // set orangepad
         orgPad = new JButton(new ImageIcon("Image\\Finalpad\\orgpad1.png"));
         orgPad.setBounds(480, 265, 200, 200);
@@ -200,7 +201,6 @@ public class DisPlay implements MouseListener{
         orgPad.setContentAreaFilled(false);
         orgPad.setBackground(Color.decode("#2b2b2b"));
         orgPad.setBorder(BorderFactory.createEmptyBorder());
-        orgPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
         // set yellowpad
         yellPad = new JButton(new ImageIcon("Image\\Finalpad\\yellpad1.png"));
         yellPad.setBounds(590, 150,200, 200);
@@ -210,7 +210,6 @@ public class DisPlay implements MouseListener{
         yellPad.setContentAreaFilled(false);
         yellPad.setBackground(Color.decode("#2b2b2b"));
         yellPad.setBorder(BorderFactory.createEmptyBorder());
-        yellPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
         // add to contentPane
         contentPane.add(textScore);
         contentPane.add(numScore);
@@ -234,52 +233,20 @@ public class DisPlay implements MouseListener{
     void patternShow(){
         genPattern();
         System.out.println(pattern);
-        pad = new ArrayList<>();
-        idx = new ArrayList<>();
         for (Map.Entry<PadType, Integer> patt : pattern.entrySet()){
             type = patt.getKey();
             int n = (int)patt.getValue();
+            cntamount += n;
             pad.add(type);
             idx.add(n);
-            // if (type == PadType.RED){
-                //startBlinkingEffect(type, n)
-            // }
-            // else if (type == PadType.CYAN){
-                
-            //     startBlinkingEffect(type, n);
-            // }
-            // else if (type == PadType.LIGHT_GREEN){
-                
-            //     startBlinkingEffect(type, n);
-            // }
-            // else if (type == PadType.ORANGE){
-                
-            //     startBlinkingEffect(type, n);
-            // }
-            // else if (type == PadType.PURPLE){
-               
-            //     startBlinkingEffect(type, n);
-            // }
-            // else if (type == PadType.YELLOW){
-            //     startBlinkingEffect(type, n);
-            // }
-            
-            
-            // System.out.println("type: " + type);
-            
-            
-            
         }
+        System.out.println("countamount : " + cntamount);
         startBlinkingEffect();
         // int n = idx.get(0);
         // for (int i = 0; i < idx.get(i); i++){
         //     startBlinkingEffect(pad.get(i), idx.get(i));
         //     // for (double x = 1; x <= 10000000; x+=.01);
         // }
-        
-
-    
-        
         // for (int i = 0; i < idx.size(); i++){
         //     System.out.println(pad.get(i));
         //     System.out.println(idx.get(i));
@@ -310,6 +277,24 @@ public class DisPlay implements MouseListener{
         // timer.setRepeats(false);
         // timer.setInitialDelay(1000);
         // timer.start();
+    }
+    void gamePhase(){
+        System.out.println("in gamePhase");
+        purPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        redPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cyanPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        orgPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        yellPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        greenPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        PadActionListener action = new PadActionListener();
+        redPad.addActionListener(action);
+        cyanPad.addActionListener(action);
+        greenPad.addActionListener(action);
+        purPad.addActionListener(action);
+        orgPad.addActionListener(action);
+        yellPad.addActionListener(action);
+
     }
     private void genPattern(){
         // add PadType to list_pad
@@ -346,7 +331,7 @@ public class DisPlay implements MouseListener{
                 list_amount.add(i);
             }
             while (cntrandom > 0){
-                System.out.println("Count: " + cntrandom);
+                // System.out.println("Count: " + cntrandom);
                 int n = randomAmount(list_amount);
                 pattern.put(randomPadtype(list_pad),n);
                 // System.out.println(pattern);
@@ -367,8 +352,7 @@ public class DisPlay implements MouseListener{
         // System.out.println("LastMap: " + pattern);
 
         // reset all list
-        // list_amount.clear();
-        // pattern.clear();
+        
         // System.out.println(pattern);
         
     }
@@ -377,7 +361,7 @@ public class DisPlay implements MouseListener{
         int i = rand.nextInt(list.size());
         PadType type = list.get(i);
         if (cntrandom <= 6){
-            System.out.println("remove: " + list.get(i));
+            // System.out.println("remove: " + list.get(i));
             list.remove(i);   
         }
         // System.out.println("Listpad after random: " + list);
@@ -388,7 +372,7 @@ public class DisPlay implements MouseListener{
         // System.out.println( "Listamount before random: "+ list);
         int i = rand.nextInt(list.size());
         Integer n = list.get(i);
-        System.out.println( "Listamount after random: "+ list);
+        // System.out.println( "Listamount after random: "+ list);
         return n;
     }
 
@@ -436,8 +420,7 @@ public class DisPlay implements MouseListener{
         ActionListener action = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                System.out.println("type = " + type);
+                System.out.println("type = " + pad.get(j));
                 System.out.println("amount = " + amount);
                 System.out.println("cntpatt = " + cntpatt);
                 
@@ -497,17 +480,29 @@ public class DisPlay implements MouseListener{
                         System.out.println("YELLback to default");
                     }
 
-                }
-                if (cntidx == idx.size() - 1 && cntpatt == amount){
-                    blinkTimer.stop();
-                }
+                }       
                 
                 if (cntpatt == amount){
                     j++;
                     cntidx++;
-                    amount = idx.get(j) * 2;
+                    if (cntidx > idx.size() - 1){
+                        // j = 0;
+                        blinkTimer.stop();
+                        
+                        // cntidx = 0;
+                    }
+                    try {
+                        amount = idx.get(j) * 2;
+                        
+                    } catch (Exception x) {
+                        // TODO: handle exception
+                        System.err.println(x);
+                        gamePhase();
+                        // return;
+                    }
                     cntpatt = 1;
                 }
+                
                 else {
                     cntpatt++;
                 }
@@ -515,7 +510,144 @@ public class DisPlay implements MouseListener{
         };
         blinkTimer = new Timer(1000, action);
         blinkTimer.start();
-    }    
+        // return;
+    }
+    private class PadActionListener implements ActionListener{
+        int redcnt = 0;
+        int cyancnt = 0;
+        int greencnt = 0;
+        int orgcnt = 0;
+        int purcnt = 0;
+        int yellcnt = 0;
+        int totalcnt = 0;
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton input = (JButton)e.getSource();
+            PadType clickedPad = null;
+            if (input == redPad) {
+                redcnt++;
+                clickedPad = PadType.RED;
+                ans.put(clickedPad, redcnt);
+            }
+            else if (input == cyanPad) {
+                cyancnt++;
+                clickedPad = PadType.CYAN;
+                ans.put(clickedPad, cyancnt);
+            } 
+            else if (input == greenPad) {
+                greencnt++;
+                clickedPad = PadType.LIGHT_GREEN;
+                ans.put(clickedPad, greencnt);
+            } 
+            else if (input == orgPad) {
+                orgcnt++;
+                clickedPad = PadType.ORANGE;
+                ans.put(clickedPad, orgcnt);
+            } 
+            else if (input == purPad) {
+                purcnt++;
+                clickedPad = PadType.PURPLE;
+                ans.put(clickedPad, purcnt);
+            } 
+            else if (input == yellPad) {
+                yellcnt++;
+                clickedPad = PadType.YELLOW;
+                ans.put(clickedPad, yellcnt);
+            }
+            totalcnt = (redcnt + cyancnt + greencnt + orgcnt + purcnt + yellcnt);
+            System.out.println(ans);
+            System.out.println(totalcnt);
+
+            if (totalcnt == cntamount){
+                if (ans.equals(pattern)){
+                    System.out.println("You get 10 point");
+                    int score = Integer.parseInt(numScore.getText()) + 10;
+                    int highscore = Integer.parseInt(numHighscore.getText());
+                    numScore.setText("" + score);
+                    if (score >= highscore){
+                        numHighscore.setText("" + score);
+                    }
+                    countgen++;
+                    list_pad.clear();
+                    list_amount.clear();
+                    pattern.clear();
+                    pad.clear();
+                    idx.clear();
+                    ans.clear();
+                    totalcnt = 0; 
+                    redcnt = 0; 
+                    cyancnt = 0; 
+                    greencnt = 0; 
+                    purcnt = 0; 
+                    orgcnt = 0; 
+                    yellcnt = 0;
+                    cntamount = 0;
+                    cntidx = 0;
+                    j = 0;
+                    patternShow();
+                }
+                else{
+                    numScore.setText("0");
+                    System.out.println("Fail");
+                    list_pad.clear();
+                    list_amount.clear();
+                    pattern.clear();
+                    pad.clear();
+                    idx.clear();
+                    j = 0;
+                    countgen = 1;
+                    ans.clear();
+                    totalcnt = 0; 
+                    redcnt = 0; 
+                    cyancnt = 0; 
+                    greencnt = 0; 
+                    purcnt = 0; 
+                    orgcnt = 0; 
+                    yellcnt = 0;
+                    cntamount = 0;
+                    cntidx = 0;
+                    window.dispose();
+                }
+            }
+            else if (totalcnt > cntamount){
+                numScore.setText("0");
+                System.out.println("Fail");
+                list_pad.clear();
+                list_amount.clear();
+                pattern.clear();
+                pad.clear();
+                idx.clear();
+                j = 0;
+                countgen = 1;
+                ans.clear();
+                totalcnt = 0; 
+                redcnt = 0; 
+                cyancnt = 0; 
+                greencnt = 0; 
+                purcnt = 0; 
+                orgcnt = 0; 
+                yellcnt = 0;
+                cntamount = 0;
+                cntidx = 0;
+                window.dispose();
+            }
+            // System.out.println("you are: " + ans.equals(pattern));
+
+            // if(clickedPad != null && pad.size() > 0 && clickedPad == pad.get(0)) {
+            //     System.out.println("Clicked pad is at the first index!");
+                
+            // } 
+            // else {
+            //     System.out.println("Incorrect click!");
+            //     
+                
+            // }
+        }
+
+        
+        
+    }
 
 }
 
