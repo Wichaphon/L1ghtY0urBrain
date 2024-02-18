@@ -440,9 +440,7 @@ public class DisPlay implements MouseListener{
                 System.out.println("type = " + type);
                 System.out.println("amount = " + amount);
                 System.out.println("cntpatt = " + cntpatt);
-                if (cntidx == idx.size()){
-                    blinkTimer.stop();
-                }
+                
                 if (cntpatt % 2 != 0){
                     if (pad.get(j) == PadType.RED){
                         redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad2.png"));
@@ -499,6 +497,9 @@ public class DisPlay implements MouseListener{
                         System.out.println("YELLback to default");
                     }
 
+                }
+                if (cntidx == idx.size() - 1 && cntpatt == amount){
+                    blinkTimer.stop();
                 }
                 
                 if (cntpatt == amount){
