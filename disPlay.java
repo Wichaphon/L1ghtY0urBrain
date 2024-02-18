@@ -155,15 +155,13 @@ public class DisPlay implements MouseListener{
         // set All pads
         // set purplepad
         UIManager.put("Button.select", Color.decode("#2b2b2b"));
-        purPad = new JButton(new ImageIcon("Image\\Finalpad\\pupad1.png"));
+        purPad = new JButton(new ImageIcon("Image\\Finalpad\\purpad1.png"));
         purPad.setBounds(145, 152 ,200, 200);
         purPad.setBorderPainted(false);
         purPad.setFocusPainted(false);
         purPad.setOpaque(false);
         purPad.setContentAreaFilled(false);
         purPad.setBorder(BorderFactory.createEmptyBorder());
-        
-        purPad.addMouseListener(this);
         // set greenpad
         greenPad = new JButton(new ImageIcon("Image\\Finalpad\\greenpad1.png"));
         greenPad.setBounds(260, 265, 200, 200);
@@ -210,6 +208,13 @@ public class DisPlay implements MouseListener{
         yellPad.setContentAreaFilled(false);
         yellPad.setBackground(Color.decode("#2b2b2b"));
         yellPad.setBorder(BorderFactory.createEmptyBorder());
+        // add mouse listener
+        purPad.addMouseListener(this);
+        redPad.addMouseListener(this);
+        cyanPad.addMouseListener(this);
+        greenPad.addMouseListener(this);
+        orgPad.addMouseListener(this);
+        yellPad.addMouseListener(this);
         // add to contentPane
         contentPane.add(textScore);
         contentPane.add(numScore);
@@ -288,13 +293,19 @@ public class DisPlay implements MouseListener{
         greenPad.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         PadActionListener action = new PadActionListener();
-        
         redPad.addActionListener(action);
         cyanPad.addActionListener(action);
         greenPad.addActionListener(action);
         purPad.addActionListener(action);
         orgPad.addActionListener(action);
         yellPad.addActionListener(action);
+
+        redPad.setIcon(new ImageIcon("Image\\Finalpad\\graypad.png"));
+        cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\graypad.png"));
+        greenPad.setIcon(new ImageIcon("Image\\Finalpad\\graypad.png"));
+        orgPad.setIcon(new ImageIcon("Image\\Finalpad\\graypad.png"));
+        yellPad.setIcon(new ImageIcon("Image\\Finalpad\\graypad.png"));
+        purPad.setIcon(new ImageIcon("Image\\Finalpad\\graypad.png"));
 
     }
     private void genPattern(){
@@ -380,21 +391,97 @@ public class DisPlay implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
        JButton input = (JButton)e.getSource();
-       if (input == btnQuit){
+        if (input == btnQuit){
             window.dispose();
             System.out.println("from btnQuit: dispose window");
         }
-       else if (input == purPad){
-            System.out.println("from purPad: click purPad") ;
+        else if (input == purPad){
+            // System.out.println("from purPad: click purPad") ;
+            purPad.setIcon(new ImageIcon("Image\\Finalpad\\purpad2.png"));
+            Timer time = new Timer(300, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    purPad.setIcon(new ImageIcon("Image\\Finalpad\\purpad1.png"));
+                }
+                
+            });
+            time.setRepeats(false);
+            time.start();
+        }
+        else if (input == redPad){
+            redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad2.png"));
+            Timer time = new Timer(300, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad1.png"));
+                }
+                
+            });
+            time.setRepeats(false);
+            time.start();
+        }
+        else if (input == cyanPad){
+            cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\cyanpad2.png"));
+            Timer time = new Timer(300, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\cyanpad1.png"));
+                }
+                
+            });
+            time.setRepeats(false);
+            time.start();
+        }
+        else if (input == greenPad){
+            greenPad.setIcon(new ImageIcon("Image\\Finalpad\\greenpad2.png"));
+            Timer time = new Timer(300, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    greenPad.setIcon(new ImageIcon("Image\\Finalpad\\greenpad1.png"));
+                }
+                
+            });
+            time.setRepeats(false);
+            time.start();
+        }
+        else if (input == orgPad){
+            orgPad.setIcon(new ImageIcon("Image\\Finalpad\\orgpad2.png"));
+            Timer time = new Timer(300, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    orgPad.setIcon(new ImageIcon("Image\\Finalpad\\orgpad1.png"));
+                }
+                
+            });
+            time.setRepeats(false);
+            time.start();
+        }
+        else if (input == yellPad){
+            yellPad.setIcon(new ImageIcon("Image\\Finalpad\\yellpad2.png"));
+            Timer time = new Timer(300, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // TODO Auto-generated method stub
+                    yellPad.setIcon(new ImageIcon("Image\\Finalpad\\yellpad1.png"));
+                }
+                
+            });
+            time.setRepeats(false);
+            time.start();
         }
     }
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+       
     }
     @Override
     public void mouseReleased(MouseEvent e) {
+
         // TODO Auto-generated method stub
         // throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
     }
@@ -404,6 +491,31 @@ public class DisPlay implements MouseListener{
         if (input == btnQuit){
             btnQuit.setFont(new Font("Unispace", Font.BOLD,20 ));
         }
+        // if (input == purPad){
+        //     // System.out.println("from purPad: click purPad") ;
+        //     purPad.setIcon(new ImageIcon("Image\\Finalpad\\purpad2.png"));
+            
+        // }
+        // else if (input == redPad){
+        //     redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad2.png"));
+            
+        // }
+        // else if (input == cyanPad){
+        //     cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\cyanpad2.png"));
+            
+        // }
+        // else if (input == greenPad){
+        //     greenPad.setIcon(new ImageIcon("Image\\Finalpad\\greenpad2.png"));
+            
+        // }
+        // else if (input == orgPad){
+        //     orgPad.setIcon(new ImageIcon("Image\\Finalpad\\orgpad2.png"));
+            
+        // }
+        // else if (input == yellPad){
+        //     yellPad.setIcon(new ImageIcon("Image\\Finalpad\\yellpad2.png"));
+            
+        // }
     }
     @Override
     public void mouseExited(MouseEvent e) {
@@ -411,6 +523,31 @@ public class DisPlay implements MouseListener{
         if (input == btnQuit){
             btnQuit.setFont(new Font("Unispace", Font.BOLD,18));
         }
+        // if (input == purPad){
+        //     // System.out.println("from purPad: click purPad") ;
+        //     purPad.setIcon(new ImageIcon("Image\\Finalpad\\pupad1.png"));
+            
+        // }
+        // else if (input == redPad){
+        //     redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad1.png"));
+            
+        // }
+        // else if (input == cyanPad){
+        //     cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\cyanpad1.png"));
+            
+        // }
+        // else if (input == greenPad){
+        //     greenPad.setIcon(new ImageIcon("Image\\Finalpad\\greenpad1.png"));
+            
+        // }
+        // else if (input == orgPad){
+        //     orgPad.setIcon(new ImageIcon("Image\\Finalpad\\orgpad1.png"));
+            
+        // }
+        // else if (input == yellPad){
+        //     yellPad.setIcon(new ImageIcon("Image\\Finalpad\\yellpad1.png"));
+            
+        // }
     }
     private void startBlinkingEffect() {
         // because it has 2 if that make blinking then n should * 2 
@@ -469,7 +606,7 @@ public class DisPlay implements MouseListener{
                         // System.out.println("ORGback to default");
                     }
                     else if (pad.get(j) == PadType.PURPLE){
-                        purPad.setIcon(new ImageIcon("Image\\Finalpad\\pupad1.png"));
+                        purPad.setIcon(new ImageIcon("Image\\Finalpad\\purpad1.png"));
                         // System.out.println("PURback to default");
                     }
                     else if (pad.get(j) == PadType.RED){
@@ -522,16 +659,7 @@ public class DisPlay implements MouseListener{
         int orgcnt = 0;
         int yellcnt = 0;
         int totalcnt = 0;
-        
-        PadActionListener(){
-            redcnt = 0;
-            cyancnt = 0;
-            greencnt = 0;
-            purcnt = 0;
-            orgcnt = 0;
-            yellcnt = 0;
-            totalcnt = 0;
-        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             JButton input = (JButton)e.getSource();
@@ -545,18 +673,19 @@ public class DisPlay implements MouseListener{
                 yellcnt = 0;
                 totalcnt = 0;
             }
-            System.out.println("redcnt: " + redcnt);
-            System.out.println("cyancnt: " + cyancnt);
-            System.out.println("greencnt: " + greencnt);
-            System.out.println("purcnt: " + purcnt);
-            System.out.println("orgcnt: " + orgcnt);
-            System.out.println("yellcnt: " + yellcnt);
-            System.out.println("totalcnt before click: " + totalcnt);
+            // System.out.println("redcnt: " + redcnt);
+            // System.out.println("cyancnt: " + cyancnt);
+            // System.out.println("greencnt: " + greencnt);
+            // System.out.println("purcnt: " + purcnt);
+            // System.out.println("orgcnt: " + orgcnt);
+            // System.out.println("yellcnt: " + yellcnt);
+            // System.out.println("totalcnt before click: " + totalcnt);
 
             if (input == redPad) {
                 redcnt += 1;
                 clickedPad = PadType.RED;
                 ans.put(clickedPad, redcnt);
+                // redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad2.png"));
                 
             }
             else if (input == cyanPad) {
@@ -606,21 +735,21 @@ public class DisPlay implements MouseListener{
                         numHighscore.setText("" + score);
                     }
                     countgen++;
-                    System.out.println("restart elements");
+                    // System.out.println("restart elements");
                     list_pad.clear();
-                    System.out.println("listpad clear: " + list_pad);
+                    // System.out.println("listpad clear: " + list_pad);
                     list_amount.clear();
-                    System.out.println("listamount clear: " + list_amount);
+                    // System.out.println("listamount clear: " + list_amount);
                     pattern.clear();
-                    System.out.println("pattern clear: " + pattern);
+                    // System.out.println("pattern clear: " + pattern);
                     pad.clear();
-                    System.out.println("pad clear: " + pad);
+                    // System.out.println("pad clear: " + pad);
                     idx.clear();
-                    System.out.println("idx clear: " + idx);
+                    // System.out.println("idx clear: " + idx);
                     ans.clear();
-                    System.out.println("ans clear: " + ans);
+                    // System.out.println("ans clear: " + ans);
                     totalcnt = 0; 
-                    System.out.println("totalcnt clear: " + totalcnt);
+                    // System.out.println("totalcnt clear: " + totalcnt);
                     redcnt = 0; 
                     cyancnt = 0; 
                     greencnt = 0; 
@@ -632,6 +761,12 @@ public class DisPlay implements MouseListener{
                     j = 0;
                     clickedPad = null;
                     e.setSource(null);
+                    redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad1.png"));
+                    cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\cyanpad1.png"));
+                    greenPad.setIcon(new ImageIcon("Image\\Finalpad\\greenpad1.png"));
+                    purPad.setIcon(new ImageIcon("Image\\Finalpad\\purpad1.png"));
+                    orgPad.setIcon(new ImageIcon("Image\\Finalpad\\orgpad1.png"));
+                    yellPad.setIcon(new ImageIcon("Image\\Finalpad\\yellpad1.png"));
                     patternShow();
                 }
                 else{
