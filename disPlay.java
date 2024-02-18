@@ -58,7 +58,7 @@ public class DisPlay implements MouseListener{
     private ArrayList <Integer> list_amount = new ArrayList<>(); // list of amount to click in one pad
     private ArrayList <PadType> pad = new ArrayList<>();
     ArrayList <Integer> idx = new ArrayList<>();
-    private int countgen = 4; // count for generate pattern (level will increase from countgen)
+    private int countgen = 1; // count for generate pattern (level will increase from countgen)
     private int cntrandom = 0;
     private int cntpatt = 1;
     private int amount;
@@ -428,57 +428,57 @@ public class DisPlay implements MouseListener{
                 if (cntpatt % 2 != 0){
                     if (pad.get(j) == PadType.RED){
                         redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad2.png"));
-                        System.out.println("change REDpad to light already");
+                        // System.out.println("change REDpad to light already");
                     }
                     else if(pad.get(j) == PadType.CYAN){
                         cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\cyanpad2.png"));
-                        System.out.println("change CYANpad to light already");
+                        // System.out.println("change CYANpad to light already");
                     }
                     else if (pad.get(j) == PadType.LIGHT_GREEN){
                         greenPad.setIcon(new ImageIcon("Image\\Finalpad\\greenpad2.png"));
-                        System.out.println("change GREENpad to light already");
+                        // System.out.println("change GREENpad to light already");
                     }
                     else if (pad.get(j) == PadType.ORANGE){
                         orgPad.setIcon(new ImageIcon("Image\\Finalpad\\orgpad2.png"));
-                        System.out.println("change ORGpad to light already");
+                        // System.out.println("change ORGpad to light already");
                     }
                     else if (pad.get(j) == PadType.PURPLE){
                         purPad.setIcon(new ImageIcon("Image\\Finalpad\\purpad2.png"));
-                        System.out.println("change PURpad to light already");
+                        // System.out.println("change PURpad to light already");
                     }
                     else if (pad.get(j) == PadType.YELLOW){
                         yellPad.setIcon(new ImageIcon("Image\\Finalpad\\yellpad2.png"));
-                        System.out.println("change YELLpad to light already");
+                        // System.out.println("change YELLpad to light already");
                     }
                 }
                 if (cntpatt % 2 == 0){
                     if (pad.get(j) == PadType.RED){
                         redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad1.png"));
-                        System.out.println("REDback to default");
+                        // System.out.println("REDback to default");
                     }
                     else if(pad.get(j) == PadType.CYAN){
                         cyanPad.setIcon(new ImageIcon("Image\\Finalpad\\cyanpad1.png"));
-                        System.out.println("CYANback to default");
+                        // System.out.println("CYANback to default");
                     }
                     else if (pad.get(j) == PadType.LIGHT_GREEN){
                         greenPad.setIcon(new ImageIcon("Image\\Finalpad\\greenpad1.png"));
-                        System.out.println("GREENback to default");
+                        // System.out.println("GREENback to default");
                     }
                     else if (pad.get(j) == PadType.ORANGE){
                         orgPad.setIcon(new ImageIcon("Image\\Finalpad\\orgpad1.png"));
-                        System.out.println("ORGback to default");
+                        // System.out.println("ORGback to default");
                     }
                     else if (pad.get(j) == PadType.PURPLE){
                         purPad.setIcon(new ImageIcon("Image\\Finalpad\\pupad1.png"));
-                        System.out.println("PURback to default");
+                        // System.out.println("PURback to default");
                     }
                     else if (pad.get(j) == PadType.RED){
                         redPad.setIcon(new ImageIcon("Image\\Finalpad\\redpad1.png"));
-                        System.out.println("REDback to default");
+                        // System.out.println("REDback to default");
                     }
                     else if (pad.get(j) == PadType.YELLOW){
                         yellPad.setIcon(new ImageIcon("Image\\Finalpad\\yellpad1.png"));
-                        System.out.println("YELLback to default");
+                        // System.out.println("YELLback to default");
                     }
 
                 }       
@@ -534,17 +534,9 @@ public class DisPlay implements MouseListener{
         }
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-            System.out.println("redcnt: " + redcnt);
-            System.out.println("cyancnt: " + cyancnt);
-            System.out.println("greencnt: " + greencnt);
-            System.out.println("purcnt: " + purcnt);
-            System.out.println("orgcnt: " + orgcnt);
-            System.out.println("yellcnt: " + yellcnt);
-            System.out.println("totalcnt before click: " + totalcnt);
             JButton input = (JButton)e.getSource();
             PadType clickedPad = null;
-            if (countgen >= 6 && ans.isEmpty()){
+            if (countgen >= 3 && ans.isEmpty()){
                 redcnt = 0;
                 cyancnt = 0;
                 greencnt = 0;
@@ -553,6 +545,13 @@ public class DisPlay implements MouseListener{
                 yellcnt = 0;
                 totalcnt = 0;
             }
+            System.out.println("redcnt: " + redcnt);
+            System.out.println("cyancnt: " + cyancnt);
+            System.out.println("greencnt: " + greencnt);
+            System.out.println("purcnt: " + purcnt);
+            System.out.println("orgcnt: " + orgcnt);
+            System.out.println("yellcnt: " + yellcnt);
+            System.out.println("totalcnt before click: " + totalcnt);
 
             if (input == redPad) {
                 redcnt += 1;
