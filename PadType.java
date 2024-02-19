@@ -1,0 +1,3 @@
+enum PadType {
+    RED,CYAN,LIGHT_GREEN,YELLOW,ORANGE,PURPLE;
+}
