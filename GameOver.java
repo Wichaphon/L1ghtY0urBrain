@@ -1,24 +1,12 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
+import javax.swing.*;
 
 public class GameOver extends JFrame implements ActionListener {
     private ImageIcon imageIcon;
-    private Timer timer;
+    private Timer animationTimer;
     private Image gameOver, peat, del, ppond;
     private int xVel = 5;
     private int x = (384 / 2) + 20;
@@ -29,7 +17,6 @@ public class GameOver extends JFrame implements ActionListener {
     private int countdownSeconds = 5;
 
     private BottonSound musicBotton;
-    private BackgroundSound musicBackground;
 
     public GameOver() {
         musicBotton = new BottonSound();
@@ -44,9 +31,6 @@ public class GameOver extends JFrame implements ActionListener {
         peat = new ImageIcon("Image/GameOverFile/peat.png").getImage();
         del = new ImageIcon("Image/GameOverFile/del.png").getImage();
         ppond = new ImageIcon("Image/GameOverFile/ppond.png").getImage();
-        timer = new Timer(20, this);  // Adjusted timer frequency
-        timer.start();
-        
 
         Timer countdownTimer = new Timer(1000, new ActionListener() {
             @Override
@@ -54,15 +38,14 @@ public class GameOver extends JFrame implements ActionListener {
                 countdownSeconds--;
 
                 if (countdownSeconds <= 0) {
-                    timer.stop();  // หยุด Timer ที่เคยสร้างไว้
-                    ((Timer) e.getSource()).stop();  // หยุด Timer นับถอยหลัง
+                    animationTimer.stop();
+                    ((Timer) e.getSource()).stop();
                     SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        App game = new App();
-                    }
-                });
-                    dispose();  // ปิดหน้าต่าง
-                    
+                        public void run() {
+                            App game = new App();
+                        }
+                    });
+                    dispose();
                 } else {
                     returncountdown.setText(Integer.toString(countdownSeconds));
                 }
@@ -73,7 +56,7 @@ public class GameOver extends JFrame implements ActionListener {
         Timer rotationTimer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rotationAngle += 0.1;  
+                rotationAngle += 0.1;
                 repaint();
             }
         });
@@ -84,31 +67,27 @@ public class GameOver extends JFrame implements ActionListener {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
-
-                // Set rendering hints for smoother text rendering
                 g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
                 drawRotatedImage(g2d, peat, 100, 370, rotationAngle);
                 drawRotatedImage(g2d, del, 400, 370, rotationAngle);
                 drawRotatedImage(g2d, ppond, 700, 370, rotationAngle);
-
                 g2d.drawImage(gameOver, x, y, this);
             }
         };
 
         contentPane.setLayout(new BorderLayout());
         contentPane.setBackground(Color.decode("#2b2b2b"));
-        // Disable double-buffering to reduce text shaking
-        contentPane.setDoubleBuffered(false);
+        contentPane.setDoubleBuffered(true); // Enable double-buffering
         this.add(contentPane, BorderLayout.CENTER);
-        ImageIcon gameIcon = new ImageIcon("Image/MenuIcon.png");
-        gameIcon.setImage(gameOver);
         setDetail();
 
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
+
+        animationTimer = new Timer(20, this);
+        animationTimer.start();
     }
 
     private void setDetail() {
@@ -154,7 +133,6 @@ public class GameOver extends JFrame implements ActionListener {
         if (x >= 750 - gameOver.getWidth(null) || x <= 300) {
             xVel *= -1;
         }
-
         x += xVel;
         repaint();
     }
@@ -166,9 +144,5 @@ public class GameOver extends JFrame implements ActionListener {
         g2d.rotate(angle, x + imageWidth / 2, y + imageHeight / 2);
         g2d.drawImage(image, x, y, this);
         g2d.rotate(-angle, x + imageWidth / 2, y + imageHeight / 2);
-    }
-
-    public static void main(String[] args) {
-        GameOver x = new GameOver();
     }
 }

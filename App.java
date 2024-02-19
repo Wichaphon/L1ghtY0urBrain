@@ -24,7 +24,7 @@ public class App extends JFrame implements ActionListener {
 
     public App() {
         musicBackground = new BackgroundSound();
-        musicBackground.playBackgroundSound("Sound\\Duckky.wav",0.0f);
+        musicBackground.playBackgroundSound("Sound\\Duckky.wav", 0.0f);
         imageIcon = new ImageIcon("Image/Logo.png");
         this.setTitle("L1ght Y0ur Brain (Beta 1.0)");
         this.setIconImage(imageIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
@@ -48,6 +48,10 @@ public class App extends JFrame implements ActionListener {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
 
+                // Set rendering hints for smoother text rendering
+                g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
                 for (int i = 0; i < bgSquares.length; i++) {
                     int centerX = x[i] + bgSquares[i].getWidth(null) / 2;
                     int centerY = y[i] + bgSquares[i].getHeight(null) / 2;
@@ -58,9 +62,11 @@ public class App extends JFrame implements ActionListener {
                 }
             }
         };
-        
+
         contentPanel.setLayout(null);
         contentPanel.setBackground(Color.decode("#2b2b2b"));
+        contentPanel.setDoubleBuffered(false);  // Disable double-buffering
+
         this.add(contentPanel, BorderLayout.CENTER);
 
         gameLabel = new JLabel();
@@ -120,16 +126,17 @@ public class App extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JButton clickedButton = (JButton) e.getSource();
             musicBotton = new BottonSound();
-            
+
             if (clickedButton == menuButtons[0]) {
                 musicBotton.playSoundBotton("Sound/clicksound.wav", 500);
                 musicBackground.stopBackgroundSound();
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         DisPlay game = new DisPlay();
+                        dispose();
                     }
                 });
-                dispose();
+                
             } else if (clickedButton == menuButtons[1]) {
                 musicBotton.playSoundBotton("Sound/clicksound.wav", 500);
                 musicBackground.stopBackgroundSound();
