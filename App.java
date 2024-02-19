@@ -24,8 +24,9 @@ public class App extends JFrame implements ActionListener {
 
     public App() {
         musicBackground = new BackgroundSound();
-        musicBackground.playBackgroundSound("Sound/menuBgSound.wav");
+        musicBackground.playBackgroundSound("Sound\\Duckky.wav",0.0f);
         imageIcon = new ImageIcon("Image/Logo.png");
+        this.setTitle("L1ght Y0ur Brain (Beta 1.0)");
         this.setIconImage(imageIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH));
         this.setSize(960, 768);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,12 +58,13 @@ public class App extends JFrame implements ActionListener {
                 }
             }
         };
+        
         contentPanel.setLayout(null);
         contentPanel.setBackground(Color.decode("#2b2b2b"));
         this.add(contentPanel, BorderLayout.CENTER);
 
         gameLabel = new JLabel();
-        gameIcon = new ImageIcon("Image/MenuIcon.png");
+        gameIcon = new ImageIcon("Image/MenuIcon1.png");
         gameLabel.setBounds(220, 30, 512, 384);
         gameLabel.setIcon(gameIcon);
         contentPanel.add(gameLabel);
@@ -122,12 +124,17 @@ public class App extends JFrame implements ActionListener {
             if (clickedButton == menuButtons[0]) {
                 musicBotton.playSoundBotton("Sound/clicksound.wav", 500);
                 musicBackground.stopBackgroundSound();
-                DisPlay game = new DisPlay();
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        DisPlay game = new DisPlay();
+                    }
+                });
                 dispose();
             } else if (clickedButton == menuButtons[1]) {
                 musicBotton.playSoundBotton("Sound/clicksound.wav", 500);
                 musicBackground.stopBackgroundSound();
                 dispose();
+                System.exit(0);
             }
         }
     }

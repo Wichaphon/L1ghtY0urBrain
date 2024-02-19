@@ -5,7 +5,7 @@ public class BackgroundSound {
     private File soundFile;
     private Clip clip;
 
-    public void playBackgroundSound(String filePath) {
+    public void playBackgroundSound(String filePath, float Db) {
         try {
             soundFile = new File(filePath);
             if (soundFile.exists()) {
@@ -15,7 +15,7 @@ public class BackgroundSound {
 
                 // Set volume
                 FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(6.0f);
+                gainControl.setValue(Db);
 
                 // Loop the background sound
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
